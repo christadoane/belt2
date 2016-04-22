@@ -1,0 +1,46 @@
+
+<% if current_user %>
+  <form action='/sessions/<%= session[:id] %>' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <button type="submit" class="btn btn-warning">Log Out</button>
+  </form>
+<% end %>
+<h1>Show Songs</h1>
+<table style="border:solid;" class="table table-striped">
+	<tr>
+		<td>Artist</td>
+		<td>Title</td>
+		<td>Count</td>
+		<td>Add to Playlist</td>
+	</tr>
+	<% @songs.each do |song| %>
+	<tr>
+		<td><%= song.artist %></td>
+		<td><a href="/songs/<%= song.id %>"><%= song.title %></a></td>
+		<td><%= song.playlists.count %></td>
+		<td>
+			<form action="/playlists" method="post">
+			<input type='hidden' name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type='hidden' name='user_id' value='<%= session[:id] %>'>
+			<input type='hidden' name='song_id' value='<%= song.id %>'>
+			<button type='submit'>Add</button>
+			</form>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+<h1>Add a Song</h1>
+<form action='/songs' method='post'>
+<div class="form-group">
+<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+<input type='hidden' name='user_id' value='<%= session[:id] %>'>
+<label>Title:</label>
+<input type='text' name='title'>
+<label>Artist:</label>
+<input type='text' name='artist'>
+	
+<input type='submit' value='Add Song'>
+</div>
+</form>

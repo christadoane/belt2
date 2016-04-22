@@ -1,0 +1,25 @@
+<% if current_user %>
+  <form action='/sessions/<%= session[:id] %>' method='post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+    <input type='hidden' name='_method' value='delete'>
+    <button type="submit" class="btn btn-warning">Log Out</button>
+  </form>
+<% end %>
+<button class="btn btn-warning"><a href="/songs">Dashboard</a></button>
+
+<h1><%= @user.first_name %> <%= @user.last_name %>'s Playlist</h1>
+<table style="border:solid;" class="table table-striped">
+	<tr>
+		<td>Artist</td>
+		<td>Title</td>
+		<td>Times Added</td>
+	</tr>
+	<% @user_playlist.each do |song| %>
+	<tr>
+		<td><%= song.song.artist %></td>
+		<td><%= song.song.title %></td>
+		<td>count</td>
+		
+	</tr>
+	<% end %>
+</table>
