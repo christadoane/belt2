@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
-    @user_playlist = Playlist.where(user_id: params[:id])
+    @user_playlist = Playlist.where(user_id: params[:id]).group("song_id")
   end
   private
   def user_params
